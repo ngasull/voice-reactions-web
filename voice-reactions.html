@@ -40,9 +40,7 @@
 
             scriptNode.addEventListener('audioprocess', (audioProcessingEvent) => {
               const frames = audioProcessingEvent.inputBuffer.getChannelData(0)
-
               const average = frames.reduce((acc, f) => acc + Math.abs(f), 0) / frames.length
-              console.info(average)
 
               if (average > ACTIVE_THRESHOLD) {
                 if (n_active < 1) {
