@@ -12,10 +12,7 @@
     </div>
     
     <script type="text/javascript">
-      const TypedArrayClass = Int8Array
-      const FRAME_LENGTH = TypedArrayClass.BYTES_PER_ELEMENT
       const ACTIVE_THRESHOLD = .2
-      const ACTIVE_THRESHOLD_VOLUME = (Math.pow(2, 8 * FRAME_LENGTH) - 1) * ACTIVE_THRESHOLD
       const INACTIVE_N_THRESHOLD = 5
       const stepPicker = document.getElementById('step-picker')
       const stepPlayer = document.getElementById('step-player')
@@ -59,40 +56,6 @@
                 n_active -= 1
               }
             })
-
-            /*
-            let prev_bytes = new Uint8Array(0)
-            const recorder = new MediaRecorder(mediaStream);
-            recorder.ondataavailable = e => {
-              e.data.arrayBuffer().then(ab => {
-                const bytes = new Uint8Array(prev_bytes.byteLength + ab.byteLength)
-                bytes.set(prev_bytes, 0)
-                bytes.set(new Uint8Array(ab), prev_bytes.byteLength)
-                const n_frames_bytes = bytes.byteLength - (bytes.byteLength % FRAME_LENGTH)
-                const n_frames = n_frames_bytes / FRAME_LENGTH
-                const frames = new TypedArrayClass(bytes.buffer, 0, n_frames)
-                prev_bytes = bytes.slice(n_frames_bytes, bytes.byteLength)
-
-                if (frames.length > 0) {
-                  const average = frames.reduce((acc, f) => acc + Math.abs(f), 0) / frames.length
-                  console.info(average)
-
-                  if (average > ACTIVE_THRESHOLD) {
-                    if (n_active < 1) {
-                      videoPlayer.play()
-                    }
-                    n_active = INACTIVE_N_THRESHOLD
-                  } else {
-                    if (n_active == 1) {
-                      videoPlayer.pause()
-                    }
-                    n_active -= 1
-                  }
-                }
-              })
-            };
-            recorder.start(50);
-            */
           })
           .catch((e) => {
             console.error(e)
